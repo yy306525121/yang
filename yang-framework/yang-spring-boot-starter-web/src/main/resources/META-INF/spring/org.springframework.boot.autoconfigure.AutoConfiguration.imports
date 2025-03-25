@@ -1,0 +1,6 @@
+cn.codeyang.yang.framework.apilog.config.YangApiLogAutoConfiguration
+cn.codeyang.yang.framework.jackson.config.YangJacksonAutoConfiguration
+cn.codeyang.yang.framework.swagger.config.YangSwaggerAutoConfiguration
+cn.codeyang.yang.framework.web.config.YangWebAutoConfiguration
+cn.codeyang.yang.framework.xss.config.YangXssAutoConfiguration
+cn.codeyang.yang.framework.banner.config.YangBannerAutoConfiguration

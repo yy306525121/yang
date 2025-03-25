@@ -1,0 +1,3 @@
+cn.codeyang.yang.framework.mq.redis.config.YangRedisMQProducerAutoConfiguration
+cn.codeyang.yang.framework.mq.redis.config.YangRedisMQConsumerAutoConfiguration
+cn.codeyang.yang.framework.mq.rabbitmq.config.YangRabbitMQAutoConfiguration

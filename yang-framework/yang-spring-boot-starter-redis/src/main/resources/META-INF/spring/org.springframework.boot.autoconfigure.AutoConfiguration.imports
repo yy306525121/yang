@@ -1,0 +1,2 @@
+cn.codeyang.yang.framework.redis.config.YangRedisAutoConfiguration
+cn.codeyang.yang.framework.redis.config.YangCacheAutoConfiguration

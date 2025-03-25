@@ -1,0 +1,3 @@
+cn.codeyang.yang.framework.datasource.config.YangDataSourceAutoConfiguration
+cn.codeyang.yang.framework.mybatis.config.YangMybatisAutoConfiguration
+cn.codeyang.yang.framework.translate.config.YangTranslateAutoConfiguration

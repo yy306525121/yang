@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>yang</artifactId>
+        <groupId>cn.codeyang.boot</groupId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>yang-module-mall</artifactId>
+    <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+
+    <description>
+        商城大模块，由 product 商品、promotion 营销、trade 交易、statistics 统计等组成
+    </description>
+    <modules>
+        <module>yang-module-promotion-api</module>
+        <module>yang-module-promotion-biz</module>
+        <module>yang-module-product-api</module>
+        <module>yang-module-product-biz</module>
+        <module>yang-module-trade-api</module>
+        <module>yang-module-trade-biz</module>
+        <module>yang-module-statistics-api</module>
+        <module>yang-module-statistics-biz</module>
+    </modules>
+
+</project>
