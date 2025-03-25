@@ -28,6 +28,8 @@
         <module>yang-spring-boot-starter-biz-tenant</module>
         <module>yang-spring-boot-starter-biz-data-permission</module>
         <module>yang-spring-boot-starter-biz-ip</module>
+
+        <module>yang-spring-boot-starter-transmission</module>
     </modules>
 
     <artifactId>yang-framework</artifactId>
