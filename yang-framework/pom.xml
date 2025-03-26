@@ -30,6 +30,7 @@
         <module>yang-spring-boot-starter-biz-ip</module>
 
         <module>yang-spring-boot-starter-transmission</module>
+        <module>yang-spring-boot-starter-pt</module>
     </modules>
 
     <artifactId>yang-framework</artifactId>
