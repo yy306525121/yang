@@ -17,7 +17,15 @@ public class YangPTProperties {
     public static class Xpath {
         private String name;
 
+        private UserInfo userInfo;
         private Torrent torrent;
+
+        @Data
+        public static class UserInfo {
+            private String usernameSelector;
+            private String uploadedSelector;
+            private String downloadedSelector;
+        }
 
         @Data
         public static class Torrent {

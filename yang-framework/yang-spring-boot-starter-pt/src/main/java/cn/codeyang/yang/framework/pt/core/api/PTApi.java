@@ -2,14 +2,13 @@ package cn.codeyang.yang.framework.pt.core.api;
 
 import cn.codeyang.yang.framework.pt.config.YangPTProperties;
 import cn.codeyang.yang.framework.pt.core.domain.Torrent;
+import cn.codeyang.yang.framework.pt.core.domain.UserInfo;
 import cn.codeyang.yang.framework.pt.core.utils.SpiderUtil;
-import cn.hutool.core.net.URLEncodeUtil;
 import cn.hutool.core.net.url.UrlBuilder;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
-import cn.hutool.http.HttpUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,19 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface PTApi {
-    YangPTProperties getYangPTProperties();
+    default List<Torrent> fetchTorrents(YangPTProperties.Xpath xpath, String host, String cookie, Map<String, String> params) {
 
-    default List<Torrent> fetchTorrents(String host, String cookie, Map<String, String> params) {
-        YangPTProperties yangPTProperties = getYangPTProperties();
-        List<YangPTProperties.Xpath> xpathList = yangPTProperties.getXpathList();
-        YangPTProperties.Xpath xpath = null;
-
-        for (YangPTProperties.Xpath xpathSetting : xpathList) {
-            if (host.contains(xpathSetting.getName().toLowerCase())) {
-                xpath = xpathSetting;
-                break;
-            }
-        }
         if (xpath == null) {
             return new ArrayList<>();
         }
@@ -113,5 +101,31 @@ public interface PTApi {
         }
 
         return torrents;
+    }
+
+    default UserInfo fetchUserInfo(YangPTProperties.Xpath xpath, String host, String cookie) {
+        UserInfo userInfo = new UserInfo();
+
+        String url = UrlBuilder.of(host, StandardCharsets.UTF_8).build();
+        String result = HttpRequest.get(url)
+                .header(Header.COOKIE, cookie)
+                .timeout(100000)
+                .execute().body();
+
+        Document document = Jsoup.parse(result);
+
+        Element usernameElement = SpiderUtil.selectFirst(document, xpath.getUserInfo().getUsernameSelector());
+        if (usernameElement != null) {
+            String username = usernameElement.text().strip();
+            userInfo.setUsername(username);
+        }
+
+        String uploaded = SpiderUtil.selectNextSiblingText(document, xpath.getUserInfo().getUploadedSelector());
+        userInfo.setUploaded(uploaded);
+
+        String downloaded = SpiderUtil.selectNextSiblingText(document, xpath.getUserInfo().getDownloadedSelector());
+        userInfo.setDownloaded(downloaded);
+
+        return userInfo;
     }
 }

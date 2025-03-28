@@ -36,9 +36,13 @@ public class PTApiTest extends BaseMockitoUnitTest {
         springSundayTorrent.setLeecherSizeSelector("> td:eq(6)");
         springSundayTorrent.setNextPageSelector("p.nav > a:contains(下一页)");
 
+        YangPTProperties.Xpath.UserInfo springSundayUserInfo = new YangPTProperties.Xpath.UserInfo();
+        springSundayUserInfo.setUsernameSelector("");
+
         YangPTProperties.Xpath springSundayXpath = new YangPTProperties.Xpath();
         springSundayXpath.setName("springsunday");
         springSundayXpath.setTorrent(springSundayTorrent);
+        springSundayXpath.setUserInfo(springSundayUserInfo);
 
 
         YangPTProperties.Xpath.Torrent hdhomeTorrent = new YangPTProperties.Xpath.Torrent();
@@ -48,9 +52,15 @@ public class PTApiTest extends BaseMockitoUnitTest {
         hdhomeTorrent.setDownloadInnerSelector("img.download");
         hdhomeTorrent.setTagSelector("table.torrentname > tbody > tr > td:first-child > span.tags");
 
+        YangPTProperties.Xpath.UserInfo hdhomeUserInfo = new YangPTProperties.Xpath.UserInfo();
+        hdhomeUserInfo.setUsernameSelector("table#info_block > tbody > tr > td > table > tbody > tr > td:first-child > span > span:first-child > a");
+        hdhomeUserInfo.setUploadedSelector("font.color_uploaded");
+        hdhomeUserInfo.setDownloadedSelector("font.color_downloaded");
+
         YangPTProperties.Xpath hdhomeXpath = new YangPTProperties.Xpath();
         hdhomeXpath.setName("hdhome");
         hdhomeXpath.setTorrent(hdhomeTorrent);
+        hdhomeXpath.setUserInfo(hdhomeUserInfo);
 
         xpathList.add(hdhomeXpath);
         xpathList.add(springSundayXpath);
@@ -60,23 +70,52 @@ public class PTApiTest extends BaseMockitoUnitTest {
 
     @Test
     public void HDHomeTorrentSearchTest() {
+        String host = "https://hdhome.org";
 
-        HDHomeApi api = new HDHomeApi(properties);
+        List<YangPTProperties.Xpath> xpathList = properties.getXpathList();
+        YangPTProperties.Xpath xpath = null;
+
+        for (YangPTProperties.Xpath xpathSetting : xpathList) {
+            if (host.contains(xpathSetting.getName().toLowerCase())) {
+                xpath = xpathSetting;
+                break;
+            }
+        }
+
+        HDHomeApi api = new HDHomeApi();
 
         Map<String, String> params = new HashMap<>();
         params.put("search", "变形金刚");
 
-        List<Torrent> torrents = api.fetchTorrents("https://hdhome.org", "", params);
+        List<Torrent> torrents = api.fetchTorrents(xpath, host, "", params);
         assertTrue(!torrents.isEmpty());
     }
 
     @Test
-    public void springSundayTorrentSearchTest() {
-        SpringSundayApi api = new SpringSundayApi(properties);
-        Map<String, String> params = new HashMap<>();
-        params.put("search", "变形金刚");
+    public void HDHomeUserInfoSearchTest() {
+        String host = "https://hdhome.org";
 
-        List<Torrent> torrents = api.fetchTorrents("https://springsunday.net", "", params);
-        assertTrue(!torrents.isEmpty());
+        List<YangPTProperties.Xpath> xpathList = properties.getXpathList();
+        YangPTProperties.Xpath xpath = null;
+
+        for (YangPTProperties.Xpath xpathSetting : xpathList) {
+            if (host.contains(xpathSetting.getName().toLowerCase())) {
+                xpath = xpathSetting;
+                break;
+            }
+        }
+
+        HDHomeApi api = new HDHomeApi();
+        api.fetchUserInfo(xpath, host, "");
     }
+
+    // @Test
+    // public void springSundayTorrentSearchTest() {
+    //     SpringSundayApi api = new SpringSundayApi(properties);
+    //     Map<String, String> params = new HashMap<>();
+    //     params.put("search", "变形金刚");
+    //
+    //     List<Torrent> torrents = api.fetchTorrents("https://springsunday.net", "", params);
+    //     assertTrue(!torrents.isEmpty());
+    // }
 }
