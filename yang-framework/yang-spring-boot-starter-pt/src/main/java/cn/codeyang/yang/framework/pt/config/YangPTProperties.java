@@ -26,7 +26,11 @@ public class YangPTProperties {
             private String subTitleSelector;
             private String downloadInnerSelector;
             private String tagSelector;
+            private String sizeSelector;
+            private String seederSizeSelector;
+            private String leecherSizeSelector;
 
+            private String nextPageSelector;
         }
     }
 }

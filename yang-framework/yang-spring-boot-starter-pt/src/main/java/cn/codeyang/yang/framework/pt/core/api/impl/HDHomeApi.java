@@ -1,9 +1,8 @@
-package cn.codeyang.yang.framework.pt.core.spider.impl;
+package cn.codeyang.yang.framework.pt.core.api.impl;
 
 import cn.codeyang.yang.framework.pt.config.YangPTProperties;
-import cn.codeyang.yang.framework.pt.core.spider.PTApi;
+import cn.codeyang.yang.framework.pt.core.api.PTApi;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
